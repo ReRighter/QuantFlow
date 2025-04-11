@@ -1,0 +1,22 @@
+### 用户注册
+POST {{host}}/users/register
+content-Type: application/json
+
+{
+  "id": 1,
+  "username": "admin",
+  "email": "righter03@qq.com",
+  "password": "admin"
+}
+
+### 封面
+POST {{host}}/users/list
+
+###saveas
+POST {{host}}/strategy/saveAs/4
+content-Type: application/json
+
+{
+  "name": "test",
+  "code": "testCode"
+}

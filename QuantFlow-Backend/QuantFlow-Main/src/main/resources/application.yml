@@ -1,0 +1,37 @@
+server:
+  port: 8080
+ # servlet:
+ #   session:
+      #cookie:
+      #  http-only: true
+      #  same-site: none
+      #  secure: false #非生产环境不使用https
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/quantflow
+    username: postgres
+    password: postgres
+    hikari:
+      register-mbeans: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 500MB
+redis:
+  #host: 110.41.47.134
+  host: 12.0.0.1
+  password: 'redispasswordforzhou'
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+security:
+  allowedOrigins:
+    - http://localhost:5173
+    - http://127.0.0.1:5173
+minio:
+  endpoint: http://110.41.47.134:9000
+  accessKey: minioadmin
+  securityKey: minioadmin
