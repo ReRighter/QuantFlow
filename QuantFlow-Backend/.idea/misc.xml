@@ -5,6 +5,9 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/QuantFlow-Main/pom.xml" />
+        <option value="$PROJECT_DIR$/QuantFlow-Base/pom.xml" />
+        <option value="$PROJECT_DIR$/QuantFlow-Gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>

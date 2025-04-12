@@ -57,10 +57,7 @@ const error = ref('')
 
 const handleSubmit = async () => {
   try {
-    
-    const baseUrl = import.meta.env.VITE_API_BASE_URL
-
-    const response = await apiClient(`${baseUrl}/users/login`, {
+    const response = await apiClient(`${import.meta.env.VITE_API_GATEWAY_URL}/auth/login`, {
       method: 'POST',
       credentials: 'include',
       headers: {

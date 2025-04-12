@@ -1,26 +1,25 @@
-package edu.zhou.quantflow.service.impl;
+/*package edu.zhou.quantflow.config;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import edu.zhou.quantflow.entity.MyUserDetails;
 import edu.zhou.quantflow.entity.Users;
 import edu.zhou.quantflow.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import edu.zhou.quantflow.entity.MyUserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-/**
+*//**
  * @Author Righter
  * @Description 该类继承了UserDetailsService,
  * @Date since 3/7/2025
- */
-@Service
+ *//*
+@Component
 public class DBUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private UsersMapper usersMapper;
     @Autowired
@@ -47,4 +46,4 @@ public class DBUserDetailsService implements org.springframework.security.core.u
             throw new UsernameNotFoundException("用户 %s 不存在".formatted(username));
         }
     }
-}
+}*/

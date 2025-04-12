@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/strategy")
 public class StrategyController {
-    private IStrategyService strategyService;
+    private final IStrategyService strategyService;
     @Autowired
     public StrategyController(IStrategyService strategyService){this.strategyService =strategyService;}
 

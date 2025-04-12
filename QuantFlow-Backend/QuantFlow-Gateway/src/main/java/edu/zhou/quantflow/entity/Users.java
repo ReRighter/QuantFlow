@@ -1,13 +1,12 @@
 package edu.zhou.quantflow.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * <p>
@@ -19,15 +18,10 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@ToString
+@Table("users")
 public class Users implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 用户唯一标识
-     */
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id
     private Integer id;
 
     private String username;

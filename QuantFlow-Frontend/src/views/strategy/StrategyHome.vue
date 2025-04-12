@@ -134,7 +134,7 @@ const currentReport = ref<BackTestResult>({} as BackTestResult);
 const showReport = ref(false);
 
 const handleBackTestSubmit=async (formData:BackTestFormData)=>{
-  const response =await apiClient(`${import.meta.env.VITE_API_TRADING_URL}/strategy/backtest`, {
+  const response =await apiClient(`${import.meta.env.VITE_API_BASE_URL}/strategy/backtest`, {
     method: 'POST',
     headers: {
       credentials: 'include',

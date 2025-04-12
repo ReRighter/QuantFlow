@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
  # servlet:
  #   session:
       #cookie:
@@ -21,7 +21,7 @@ spring:
       max-request-size: 500MB
 redis:
   #host: 110.41.47.134
-  host: 12.0.0.1
+  host: 127.0.0.1
   password: 'redispasswordforzhou'
 #mybatis-plus:
 #  configuration:
