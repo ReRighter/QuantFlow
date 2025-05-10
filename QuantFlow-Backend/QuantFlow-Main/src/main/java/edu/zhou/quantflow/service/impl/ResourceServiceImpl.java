@@ -17,6 +17,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> implements IResourceService {
-
-
 }

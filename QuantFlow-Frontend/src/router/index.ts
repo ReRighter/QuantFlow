@@ -37,16 +37,22 @@ const router = createRouter({
         //   component: () => import('../views/education/CaseList.vue')
         // }
       ]
-    },{
+    },
+    {
       path: '/strategy',
       name: 'strategy',
       component: () => import('../views/strategy/StrategyHome.vue'),
+    },
+    {
+      name: 'result',
+      path: '/resultlist',
+      component: () => import('@/views/strategy/BacktestResultList.vue')
     }
     ,
     {
       path: '/trading',
       name: 'trading',
-      component: () => import('../views/trading/TradingHome.vue')
+      component: () => import('../views/trading/SimulationHome.vue')
     },
     {
       path: '/admin',

@@ -4,7 +4,7 @@ from RestrictedPython import compile_restricted, safe_builtins
 import backtrader as bt
 import tushare as ts
 import pandas as pd
-from utils import LoggerObserver
+from utils import LoggerObserver,DynamicSharpe
 
 
 
@@ -15,6 +15,7 @@ def exec_strategy_code(start_time,end_time,stock_code,strategy_code,cash=100000.
     cerebro = bt.Cerebro(stdstats=False)
     # 设置初始资金
     cerebro.broker.setcash(cash)
+    #data_df = get_stock_data_test(stock_code,start_time,end_time)
     data_df = get_stock_data(stock_code,start_time,end_time)
     data = bt.feeds.PandasData(
         dataname=data_df,
@@ -30,7 +31,8 @@ def exec_strategy_code(start_time,end_time,stock_code,strategy_code,cash=100000.
     cerebro.addstrategy(strategy_class)
     #分析指标
     cerebro.addanalyzer(bt.analyzers.AnnualReturn,_name="AnnualReturn")
-    cerebro.addanalyzer(bt.analyzers.SharpeRatio,_name="SharpeRatio")
+    cerebro.addanalyzer(bt.analyzers.SharpeRatio_A,_name="SharpeRatio")
+    #cerebro.addanalyzer(DynamicSharpe, _name="SharpeRatio")
     cerebro.addanalyzer(bt.analyzers.DrawDown,_name ="DrawDown")
     cerebro.addobserver(bt.observers.Broker)
     cerebro.addobserver(bt.observers.Trades)
@@ -48,11 +50,20 @@ def exec_strategy_code(start_time,end_time,stock_code,strategy_code,cash=100000.
         strategy = result[0]
         end_funding = round(cerebro.broker.getvalue(),2)
         earnings = round(end_funding - cash,2)
-        earnings_rate = round((earnings / cash) ,4) * 100
+        earnings_rate = round((earnings / cash) ,4) 
         annual_returns = strategy.analyzers.AnnualReturn.get_analysis() #返回结果为[(年份,收益率)]
-        sharpe_ratio = strategy.analyzers.SharpeRatio.get_analysis()
+        sharpe_ratio = strategy.analyzers.SharpeRatio.get_analysis()["sharperatio"]
         drawdown = strategy.analyzers.DrawDown.get_analysis()["max"]["drawdown"]
         log = strategy.observers[3].log
+
+        #计算总年化收益率
+        cumulative_growth = 1
+        years=0
+        for year,ret in annual_returns.items():
+            cumulative_growth *= (1+ret)
+            years+=1
+        annual_return = round(cumulative_growth ** (1/years) -1,4)
+        sharpe_ratio = round(sharpe_ratio,4) if sharpe_ratio is not None else None
 
         result_dictionary = {
             "start_date": start_time,
@@ -64,7 +75,7 @@ def exec_strategy_code(start_time,end_time,stock_code,strategy_code,cash=100000.
             "trading_log":log,
             "earnings": earnings,
             "earnings_rate": earnings_rate,
-            "annual_returns": annual_returns,
+            "annual_returns": annual_return,
             "sharpe_ratio": sharpe_ratio,
             "max_drawdown": drawdown
         }
@@ -113,9 +124,9 @@ def get_stock_data_test(stock_code,start_time,end_time):
     return df
 
 def main():
-    with open("Strategy/SMA.py", "r",encoding='utf-8') as file:
+    with open("Strategy/MACD.py", "r",encoding='utf-8') as file:
         strategy_code = file.read()
-        start_time = "20240101"
+        start_time = "20240501"
         end_time = "20241231"
         stock_code = "000001.SZ"
         exec_strategy_code(start_time, end_time, stock_code, strategy_code)

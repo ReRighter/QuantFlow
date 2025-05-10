@@ -58,4 +58,15 @@ public class StrategyService implements IStrategyService {
     public void deleteCustomizedStrategy(int id) {
         customizedStrategyMapper.deleteById(id);
     }
+
+    @Override
+    public String getStrategyCode(String type,Integer id){
+        if(type.equals("customized")){
+            return customizedStrategyMapper.selectOne(new LambdaQueryWrapper<CustomizedStrategy>().eq(CustomizedStrategy::getId,id)).getCode();
+        } else if (type.equals("stored")) {
+            return storedStrategyMapper.selectOne(new LambdaQueryWrapper<StoredStrategy>().eq(StoredStrategy::getId,id)).getCode();
+        }else {
+            throw new RuntimeException("策略类型错误!获取代码失败");
+        }
+    }
 }

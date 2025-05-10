@@ -4,14 +4,16 @@
     
     <!-- 预设策略部分 -->
     <div class="strategy-section">
-      <h2>预设策略</h2>
+      <div class="section-header">
+        <h2>预设策略</h2>
+      </div>
       <el-table :data="storedStrategies" border style="width: 100%">
         <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="name" label="策略名称" />
         <el-table-column label="操作" width="200">
           <template #default="scope">
             <el-button size="small" @click="handleView(scope.row)">查看/保存</el-button>
-            <el-button size="small" type="primary" @click="handleRun(scope.row)">运行</el-button>
+            <el-button size="small" type="primary" @click="handleRun(scope.row,'stored')">运行</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -29,7 +31,7 @@
         <el-table-column label="操作" width="320">
           <template #default="scope">
             <el-button size="small" @click="handleEdit(scope.row)">查看/修改</el-button>
-            <el-button size="small" type="primary" @click="handleRun(scope.row)">运行</el-button>
+            <el-button size="small" type="primary" @click="handleRun(scope.row,'customized')">运行</el-button>
             <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -51,7 +53,8 @@
   v-if="showReport"
   :result="currentReport"
   @close="showReport = false"
-  @save="()=>{}"
+  @save="saveReport"
+  :saveable="true"
   />
 
 </template>
@@ -64,6 +67,8 @@ import { useUserStore } from '@/stores/user';
 import StrategyDetails from '@/components/strategy/StrategyDetails.vue';
 import BackTestDetails from '@/components/strategy/BackTestDetails.vue';
 import BackTestReport from '@/components/strategy/BackTestReport.vue';
+import { tr } from 'element-plus/es/locales.mjs';
+import router from '@/router';
 const showDetails = ref(false);
 const showBackTest = ref(false);
 const currentStrategy = ref<Strategy>({}as Strategy);
@@ -88,6 +93,11 @@ const fetchStoredStrategies =async ()=>{
   }
 
 }
+
+const gotoResultList = ()=>{
+  router.push('/strategy/resultlist')
+}
+
 // 自定义策略数据
 const customStrategies = ref<Strategy[]>([]);
 const fetchCustomStrategies =async ()=>{
@@ -125,30 +135,75 @@ const handleView = (row: Strategy) => {
   showDetails.value = true;
 
 }
-
-const handleRun = (row: Strategy) => {
+//当前选择的策略的类型,用于保存报告时使用
+const selectedStrategyType =ref<'stored'|'customized'>('stored')
+const handleRun = (row: Strategy,type:'stored'|'customized') => {
   currentStrategy.value= row;
+  selectedStrategyType.value = type;
   showBackTest.value=true;  
 }
 const currentReport = ref<BackTestResult>({} as BackTestResult);
 const showReport = ref(false);
 
 const handleBackTestSubmit=async (formData:BackTestFormData)=>{
-  const response =await apiClient(`${import.meta.env.VITE_API_BASE_URL}/strategy/backtest`, {
+  try{
+  const response =await apiClient(`${import.meta.env.VITE_API_TRADING_URL}/strategy/backtest`, {
     method: 'POST',
     headers: {
       credentials: 'include',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(formData),
-  });
-  const result:Result<BackTestResult>=await response.json();
+    body: JSON.stringify({
+      ...formData,
+      strategy_code: currentStrategy.value.code,
+    })});
+  const result:Result<BackTestResult> = await response.json(); 
   if (result.code == 200 && result.data) {
     currentReport.value = result.data;
     showReport.value= true;
   } else {
-    alert('回测失败:'+ result.message);
+    throw new Error(result.message);
   }
+  }catch(err:any){
+    alert("回测失败"+err.message)
+  }
+}
+
+const saveReport =async ()=>{
+  const userId = useUserStore().userInfo?.id;
+  if(!userId){alert("未登录!");return;}
+  const response = await apiClient(baseUrl+"/backtest/savereport",{
+    method: 'POST',
+    headers: {
+      credentials: 'include',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      strategyType: selectedStrategyType.value,
+      strategyId: currentStrategy.value.id,
+      strategyName: currentStrategy.value.name,
+      startDate: currentReport.value.start_date,
+      endDate: currentReport.value.end_date,
+      stockCode: currentReport.value.stock_code,
+      userId: userId,
+      initialFunding: currentReport.value.initial_funding,
+      endFunding: currentReport.value.end_funding,
+      tradingSize: currentReport.value.trading_size,
+      tradingLog: JSON.stringify(currentReport.value.trading_log),
+      earnings: currentReport.value.earnings,
+      earningsRate: currentReport.value.earnings_rate,
+      annualReturns: currentReport.value.annual_returns,
+      sharpeRatio: currentReport.value.sharpe_ratio,
+      maxDrawdown: currentReport.value.max_drawdown
+    })
+  });
+  const result:Result<any> = await response.json();
+  if(result.code==200){
+    alert("保存成功")
+  } else{
+    alert("保存失败"+result.message);
+  }
+
 }
 
 const handleCreate = () => {

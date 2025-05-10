@@ -78,7 +78,6 @@ public class TaTest {
        List<List<String>> items;
        boolean has_more;
        int count;
-
     }
     @Data
     public static class TushareItem{

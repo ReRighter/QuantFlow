@@ -46,11 +46,11 @@
               <div class="metric-label">年化收益</div>
             </div>
             <div class="metric-item">
-              <div class="metric-value">{{ result.sharpe_ratio.toFixed(2) }}</div>
+              <div class="metric-value">{{ formateSharpe(result.sharpe_ratio)}}</div>
               <div class="metric-label">夏普比率</div>
             </div>
             <div class="metric-item">
-              <div class="metric-value">{{ formatPercent(result.max_drawdown) }}</div>
+              <div class="metric-value">{{ result.max_drawdown.toFixed(2) }}%</div>
               <div class="metric-label">最大回撤</div>
             </div>
             <div class="metric-item">
@@ -76,7 +76,7 @@
 
       <div class="modal-footer">
         <button class="btn cancel" @click="handleClose">取消</button>
-        <button class="btn save" @click="handleSave">保存记录</button>
+        <button v-if="saveable" class="btn save" @click="handleSave">保存记录</button>
       </div>
     </div>
   </div>
@@ -84,17 +84,50 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { BackTestResult } from '@/types/api'
+import type { BackTestResult, BackTestResultDetails, Result } from '@/types/api'
+import  {apiClient}  from '@/utils/apiClient';
 
 const props = defineProps<{
-  result: BackTestResult
+  result: BackTestResult,
+  saveable: boolean
 }>()
 
 const emit = defineEmits(['close', 'save'])
 const showLog = ref(false)
 
+const fetchLog = async(id:number)=> {
+  try{
+    const response = await apiClient(`${import.meta.env.VITE_API_BASE_URL}/backtest/getlog/${id}`,{
+      method: 'GET',
+      headers: {
+        credentials: 'include',
+      }
+    })
+    const result:Result<BackTestResultDetails[]> = await response.json()
+    if (response.status == 200 && result.data) {
+        return result.data
+    } else {
+      throw new Error('网络错误,获取日志失败')
+    }
+  }catch (error) {
+    console.error('Error fetching log:', error)
+    return null
+  }
+}
+  
+
 const toggleLog = () => {
   showLog.value = !showLog.value
+  // if(showLog.value === true && !props.result.trading_log ) {
+  //     props.result.trading_log = await fetchLog(props.result.id)
+  // }
+}
+
+const formateSharpe = (value: number|undefined) => {
+  if (value === undefined) {
+    return 'N/A'
+  }
+  return value.toFixed(2)
 }
 
 const formatMoney = (value: number) => {

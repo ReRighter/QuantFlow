@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "message": "success",
+    "data": {
+        "start_date": "20240101",
+        "end_date": "20241231",
+        "stock_code": "000001.SZ",
+        "initial_funding": 100000.0,
+        "end_funding": 102950.04,
+        "trading_size": 20,
+        "trading_log": [
+            "2024-01-30 - BUY EXECUTED, Price: 9.61, Cost: 19814.43, Comm: 5.94",
+            "2024-02-05 - SELL EXECUTED, Price: 9.19, Cost: 19814.43, Comm: 5.68",
+            "2024-02-06 - BUY EXECUTED, Price: 9.30, Cost: 19655.40, Comm: 5.90",
+            "2024-03-14 - SELL EXECUTED, Price: 10.30, Cost: 19655.40, Comm: 6.53",
+            "2024-03-18 - BUY EXECUTED, Price: 10.56, Cost: 20168.29, Comm: 6.05",
+            "2024-03-20 - SELL EXECUTED, Price: 10.38, Cost: 20168.29, Comm: 5.95",
+            "2024-03-22 - BUY EXECUTED, Price: 10.45, Cost: 20135.00, Comm: 6.04",
+            "2024-03-25 - SELL EXECUTED, Price: 10.35, Cost: 20135.00, Comm: 5.98",
+            "2024-03-27 - BUY EXECUTED, Price: 10.56, Cost: 20056.62, Comm: 6.02",
+            "2024-04-08 - SELL EXECUTED, Price: 10.42, Cost: 20056.62, Comm: 5.94",
+            "2024-04-18 - BUY EXECUTED, Price: 10.58, Cost: 20001.40, Comm: 6.00",
+            "2024-05-31 - SELL EXECUTED, Price: 11.14, Cost: 20001.40, Comm: 6.32",
+            "2024-07-12 - BUY EXECUTED, Price: 10.12, Cost: 20266.27, Comm: 6.08",
+            "2024-07-24 - SELL EXECUTED, Price: 10.18, Cost: 20266.27, Comm: 6.12",
+            "2024-08-01 - BUY EXECUTED, Price: 10.25, Cost: 20268.34, Comm: 6.08",
+            "2024-08-05 - SELL EXECUTED, Price: 10.11, Cost: 20268.34, Comm: 6.00",
+            "2024-08-19 - BUY EXECUTED, Price: 10.13, Cost: 20250.10, Comm: 6.08",
+            "2024-08-30 - SELL EXECUTED, Price: 10.11, Cost: 20250.10, Comm: 6.06",
+            "2024-09-24 - BUY EXECUTED, Price: 10.11, Cost: 20380.79, Comm: 6.11",
+            "2024-10-29 - SELL EXECUTED, Price: 11.62, Cost: 20380.79, Comm: 7.03",
+            "2024-11-08 - BUY EXECUTED, Price: 11.94, Cost: 20898.36, Comm: 6.27",
+            "2024-11-11 - SELL EXECUTED, Price: 11.63, Cost: 20898.36, Comm: 6.11",
+            "2024-11-19 - BUY EXECUTED, Price: 11.75, Cost: 20734.86, Comm: 6.22",
+            "2024-11-25 - SELL EXECUTED, Price: 11.28, Cost: 20734.86, Comm: 5.97",
+            "2024-12-09 - BUY EXECUTED, Price: 11.63, Cost: 20513.63, Comm: 6.15"
+        ],
+        "earnings": 2950.04,
+        "earnings_rate": 2.9499999999999997,
+        "annual_returns": {
+            "2024": 0.029500377772029518
+        },
+        "sharpe_ratio": {
+            "sharperatio": null
+        },
+        "max_drawdown": 3.864298610937872
+    }
+}

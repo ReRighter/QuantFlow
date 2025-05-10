@@ -17,4 +17,5 @@ public interface IStrategyService {
     public List<CustomizedStrategy> getCustomizedStrategyByUserId(int userId);
     public void saveCustomizedStrategy(CustomizedStrategy customizedStrategy);
     public void deleteCustomizedStrategy(int id);
+    public String getStrategyCode(String type,Integer id);
 }

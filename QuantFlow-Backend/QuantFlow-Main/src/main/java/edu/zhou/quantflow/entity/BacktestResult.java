@@ -1,9 +1,13 @@
 package edu.zhou.quantflow.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +26,7 @@ import lombok.ToString;
 public class BacktestResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -37,11 +41,13 @@ public class BacktestResult implements Serializable {
     /**
      * 回测开始日期
      */
+    @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate startDate;
 
     /**
      * 回测结束日期
      */
+    @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate endDate;
 
     /**
@@ -84,12 +90,12 @@ public class BacktestResult implements Serializable {
     /**
      * 年化收益率
      */
-    private String annualReturns;
+    private BigDecimal annualReturns;
 
     /**
      * 夏普比率
      */
-    private String sharpeRatio;
+    private BigDecimal sharpeRatio;
 
     /**
      * 最大回撤

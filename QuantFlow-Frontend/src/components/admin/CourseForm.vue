@@ -45,9 +45,7 @@
             <option value="高级">高级</option>
           </select>
         </div>
-        <div class="form-group">
-          <button type="button" class="btn-cancel" @click="testApi">testButton</button>
-        </div>
+       
 
         <div class="form-actions">
           <button type="submit" class="btn-submit">保存</button>

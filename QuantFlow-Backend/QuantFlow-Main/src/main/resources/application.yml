@@ -27,11 +27,11 @@ redis:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-security:
-  allowedOrigins:
-    - http://localhost:5173
-    - http://127.0.0.1:5173
+
 minio:
   endpoint: http://110.41.47.134:9000
   accessKey: minioadmin
   securityKey: minioadmin
+
+trading-service:
+  url: http://localhost:8082

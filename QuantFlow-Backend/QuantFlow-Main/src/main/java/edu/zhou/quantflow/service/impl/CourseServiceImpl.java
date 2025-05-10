@@ -19,6 +19,4 @@ import java.util.List;
  */
 @Service
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
-
-
 }

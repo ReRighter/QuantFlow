@@ -7,6 +7,7 @@
           <router-link to="/education">在线教育</router-link>
           <router-link to="/strategy">量化策略</router-link>
           <router-link to="/trading">模拟交易</router-link>
+          <router-link to="/resultlist">回测报告</router-link>
         </div>
       </div>
 

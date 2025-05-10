@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from controller import StrategyController as Controller
+from controller import simlation_router,strategy_router 
 from utils import Result
 import uvicorn
+import tushare as ts
 
 app = FastAPI()
 
@@ -15,8 +16,9 @@ async def exception_handler(request, exc):
         content=result.to_dict()
     )
 
-app.include_router(Controller.router, tags=["strategy"])
-
+app.include_router(simlation_router, tags=["simulation"])
+app.include_router(strategy_router,tags=["strategy"])
 
 if __name__ == "__main__":
-    uvicorn.run(app,host="0.0.0.0", port=8081, log_level="warning")
+    ts.set_token("32f21ba37fc15213e2e71c32277a58b381f1fb14543ab206dcbec0e4")
+    uvicorn.run(app,host="0.0.0.0", port=8082)

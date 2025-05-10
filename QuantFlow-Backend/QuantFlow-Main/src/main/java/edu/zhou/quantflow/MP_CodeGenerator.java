@@ -20,7 +20,7 @@ public class MP_CodeGenerator {
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> builder
                         .author("Zhouyue")
-                        .outputDir(Paths.get(System.getProperty("user.dir")) + "/quantflow-generator/src/main/java")
+                        .outputDir(Paths.get(System.getProperty("user.dir")) + "/QuantFlow-Main/quantflow-generator/src/main/java")
                         .commentDate("yyyy-MM-dd")
                 )
                 .packageConfig(builder -> builder
@@ -32,7 +32,7 @@ public class MP_CodeGenerator {
                         .xml("mapper.xml")
                 )
                 .strategyConfig(builder -> builder
-                        .addInclude("stored_strategy","customized_strategy")//指定表
+                        .addInclude("simulation_log")//指定表
                         .entityBuilder()
                         .enableLombok()
                 )

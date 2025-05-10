@@ -6,10 +6,7 @@ import edu.zhou.quantflow.mapper.UsersMapper;
 import edu.zhou.quantflow.service.IUsersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.zhou.quantflow.util.PasswordUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <p>

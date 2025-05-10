@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://127.0.0.1:5432/quantflow
+    username: postgres
+    password: postgres
+  data:
+    r2dbc:
+      repositories:
+        enabled: true
+    redis:
+      host: localhost
+      port: 6379
+      password: redispasswordforzhou
+      database: 0
+  cloud:
+    gateway:
+      routes:
+        - id: quantflow-main
+          uri: http://localhost:8081
+          predicates:
+            - Path=/main/**
+          filters:
+            - StripPrefix=1 #去掉第一个路径前缀/main
+
+        - id: quantflow-trading
+          uri: http://localhost:8082
+          predicates:
+            - Path=/trading/**
+          filters:
+            - StripPrefix=1
+
+
+security:
+  allowedOrigins:
+    - http://localhost:5173
+    - http://127.0.0.1:5173
